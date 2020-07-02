@@ -21,7 +21,7 @@ class home extends Component {
   render() {
     let latestTemp = this.state.temps ? (
 	  <h3>{this.state.temps[0].tempF} {String.fromCharCode(176)} F</h3>
-    ) : <p>Loading...</p>
+    ) : <h3>Loading...</h3>
     
     let latestTime = this.state.temps ? (
       new Date(this.state.temps[0].time).toString()
@@ -30,7 +30,8 @@ class home extends Component {
     return (
       <div>
         <div className='main border'>
-			  <h1>Current Water Temp: {latestTemp}</h1>
+        <h1>Current Water Temp: </h1>
+        {latestTemp}
 			  <h2>Last temperature reading: </h2>
 			  <TimeAgo date={latestTime} />
 			</div>
