@@ -20,7 +20,7 @@ class home extends Component {
 
   render() {
     let latestTemp = this.state.temps ? (
-	  <h3>{this.state.temps[0].tempF} {String.fromCharCode(176)} F</h3>
+	  <h1>{this.state.temps[0].tempF} {String.fromCharCode(176)} F</h1>
     ) : <h3>Loading...</h3>
     
     let latestTime = this.state.temps ? (
