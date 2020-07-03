@@ -57,6 +57,7 @@ while True:
         print("Success")
     else:
         print("Fail")
+        os.popen('sudo reboot')
     print("________________________")
 
     time.sleep(rate)
