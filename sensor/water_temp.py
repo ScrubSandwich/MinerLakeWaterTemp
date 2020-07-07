@@ -1,3 +1,5 @@
+# Miner Lake Water Temperature Sensor
+
 import os
 import glob
 import time
@@ -18,11 +20,12 @@ rate = 15 * MINUTE
 initial_time = 2 * MINUTE
 
 url = "https://us-central1-minerlakewatertemperature.cloudfunctions.net/api/addTemperature"
-payload = {}
 
 # Used for running 'git pull' to update the software
 updateCount = 0
 updateFrequency = 55
+
+status_code = -1
 
 def read_data():
     f = open(device_file, 'r')
@@ -30,6 +33,18 @@ def read_data():
     f.close()
 
     return lines
+
+def reboot():
+    print("Rebooting...")
+    os.popen('sudo reboot')
+
+def update():
+    try:
+        print("Checking for Update...")
+        os.popen('git pull')
+        print("Update complete.")
+    except:
+        reboot()
 
 def read_temp():
     lines = read_data()
@@ -43,31 +58,37 @@ def read_temp():
 
         return temp_f
 
-
-# WAIT for some time to make sure wifi is connected!
+# Wait for wifi to connect
 print("Waiting for wifi to connect on boot...")
 time.sleep(initial_time)
-print("Finished waiting for wifi to connect...\nStarting process now...")
+print("Finished waiting for wifi to connect...")
+
+update()
 
 while True:
     temp_f = read_temp()
-    payload = {'tempF': temp_f}
-    x = requests.post(url, data = payload)
-    stream = os.popen('vcgencmd measure_temp')
-    cpu_temp = stream.read()
+    cpu_temp = os.popen('vcgencmd measure_temp').read()
+
+    try:
+        x = requests.post(url, data = {'tempF': temp_f})
+        status_code = x.status_code
+    except:
+        print("Cannot POST to server")
+        reboot()
+
     print("Water Temp: " + str(temp_f) + " degrees F")
     print("CPU Temp: " + cpu_temp)
 
     updateCount = updateCount + 1
     if (updateCount == updateFrequency):
-        os.popen('git pull')
-        os.popen('sudo reboot')
+        update()
+        reboot()
 
-    if (x.status_code == 200):
+    if (status_code == 200):
         print("Success")
     else:
-        print("Fail")
-        os.popen('sudo reboot')
-    print("________________________")
+        print("Bad request")
+        reboot()
+    print()
 
     time.sleep(rate)
