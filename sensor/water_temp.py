@@ -45,7 +45,8 @@ def update():
         print(git_pull_output)
         print("\nUpdate complete.")
     except:
-        reboot()
+        print("Update Failed")
+        #reboot()
 
 def read_temp():
     lines = read_data()
