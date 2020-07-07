@@ -40,10 +40,10 @@ def reboot():
 
 def update():
     try:
-        print("Checking for Update...")
+        print("Checking for Update...\n")
         git_pull_output = os.popen('git pull')
         print(git_pull_output)
-        print("Update complete.")
+        print("\nUpdate complete.")
     except:
         reboot()
 
