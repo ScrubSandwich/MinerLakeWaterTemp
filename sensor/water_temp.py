@@ -20,6 +20,10 @@ initial_time = 2 * MINUTE
 url = "https://us-central1-minerlakewatertemperature.cloudfunctions.net/api/addTemperature"
 payload = {}
 
+# Used for running 'git pull' to update the software
+updateCount = 0
+updateFrequency = 55
+
 def read_data():
     f = open(device_file, 'r')
     lines = f.readlines()
@@ -53,6 +57,12 @@ while True:
     cpu_temp = stream.read()
     print("Water Temp: " + str(temp_f) + " degrees F")
     print("CPU Temp: " + cpu_temp)
+
+    updateCount = updateCount + 1
+    if (updateCount == updateFrequency):
+        os.popen('git pull')
+        os.popen('sudo reboot')
+
     if (x.status_code == 200):
         print("Success")
     else:
