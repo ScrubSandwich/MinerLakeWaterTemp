@@ -1,7 +1,5 @@
 # Miner Lake Water Temperature Sensor
 
-#Test update
-
 import os
 import glob
 import time
