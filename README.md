@@ -16,7 +16,7 @@
 #### `$ sudo nano /boot/config.txt`
 
 ### Add the this line at the bottom
-#### `dtoverlay=w1-gpio`
+	dtoverlay=w1-gpio
 
 
 ## Run Python script on boot
@@ -25,23 +25,23 @@
 #### `$ sudo nano /home/pi/.bashrc`
 
 ###  Add the following lines: 
-#### `echo Running MinerLakeWaterTemp Sensor Python Program from .bashrc file`
-#### `sudo python /home/pi/MinerLakeWaterTemp/sensor/water_temp.py`
+	echo Running MinerLakeWaterTemp Sensor Python Program from .bashrc file
+	sudo python /home/pi/MinerLakeWaterTemp/sensor/water_temp.py
 
 
-## Enter SSID's and Passwords of WiFi networks to connect to
+## Enter SSID's and Passwords of WiFi networks to connect to on boot
 
 ### Open the Network Interfaces File
 #### `$ sudo nano /etc/network/interfaces`
 
 ### Make sure the first line is the following:
-#### `auto wlan0`
+	auto wlan0
 
 ### Add the following lines at the bottom
-#### `allow-hotplug wlan0`
-#### `iface wlan0 inet dhcp`
-#### `wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf`
-#### `iface default inet dhcp`
+	allow-hotplug wlan0
+	iface wlan0 inet dhcp
+	wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+	iface default inet dhcp
 
 ### Open the wpa_supplicant.conf File
 #### `$ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf`
@@ -49,8 +49,8 @@
 ### Add these lines to the file
 
 	network={
-		ssid="YOUR_NETWORK_NAME"
-		psk="YOUR_NETWORK_PASSWORD"
+		ssid="NETWORK_NAME"
+		psk="NETWORK_PASSWORD"
 	}
 
 
