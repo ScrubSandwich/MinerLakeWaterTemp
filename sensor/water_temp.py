@@ -13,14 +13,15 @@ device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
 MINUTE = 60
-# Delay between readins to be sent to server in seconds
+# Delay in seconds between readins to be sent to server
 rate = 15 * MINUTE
 
-# Time to wait on first run to make sure wifi is connected
-initial_time = 2 * MINUTE
+# Time to wait in seconds on first run to make sure wifi is connected
+initial_time = 1 * MINUTE
 
 url = "https://us-central1-minerlakewatertemperature.cloudfunctions.net/api/addTemperature"
 log = "../log/log.txt"
+
 # Used for running 'git pull' to update the software
 updateCount = 0
 updateFrequency = 55
@@ -32,6 +33,8 @@ def write_file(message):
     f.write(message)
     f.write("\n") 
     f.close()
+    
+    print(message)
 
 def read_data():
     f = open(device_file, 'r')
@@ -47,11 +50,10 @@ def reboot():
 def update():
     try:
         write_file("Checking for Update...\n")
-        git_pull_output = os.popen('git pull')
-        write_file(git_pull_output)
+        git_pull_output = os.popen('sudo git pull')
         write_file("\nUpdate complete.")
-    except:
-        write_file("Update Failed")
+    except Exception as e:
+        write_file("Update Failed: " + str(e))
         #reboot()
 
 def read_temp():
@@ -93,7 +95,7 @@ while True:
         reboot()
 
     if (status_code == 200):
-        write_file("Success")
+        write_file("POST Success")
     else:
         write_file("Bad request")
         reboot()
