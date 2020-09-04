@@ -20,7 +20,7 @@ rate = 15 * MINUTE
 initial_time = 1 * MINUTE
 
 url = "https://us-central1-minerlakewatertemperature.cloudfunctions.net/api/addTemperature"
-log = "../log/log.txt"
+log = "/home/pi/MinerLakeWaterTemp/log/log.txt"
 
 # Used for running 'git pull' to update the software
 updateCount = 0
@@ -29,10 +29,10 @@ updateFrequency = 55
 status_code = -1
 
 def write_file(message):
-    f = open(log, "a")  # append mode 
-    f.write(message)
-    f.write("\n") 
-    f.close()
+    #f = open(log, "a")  # append mode 
+    #f.write(message)
+    #f.write("\n") 
+    #f.close()
     
     print(message)
 
