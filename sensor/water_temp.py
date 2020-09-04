@@ -50,7 +50,10 @@ def reboot():
 def update():
     try:
         write_file("Checking for Update...\n")
+        
+        os.popen('cd /home/pi/MinerLakeWaterTemp')
         git_pull_output = os.popen('sudo git pull')
+        
         write_file("\nUpdate complete.")
     except Exception as e:
         write_file("Update Failed: " + str(e))
