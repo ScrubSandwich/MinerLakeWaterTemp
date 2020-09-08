@@ -3,10 +3,16 @@ import axios from 'axios';
 import TimeAgo from 'react-timeago'
 import CanvasJSReact from '../lib/canvasjs.react';
 
+import PayPalBadge from '../img/PayPal.png';
+
 class home extends Component {
   state = {
     temps: null,
     chartDataPoints: []
+  }
+
+  constructor(props) {
+    super(props);
   }
 
   componentDidUpdate() {
@@ -90,11 +96,19 @@ class home extends Component {
           <h2>Last temperature reading: </h2>
           <TimeAgo date={latestTime} />
 			  </div>
-        <div>
+
+        <div className='main border'>
           <CanvasJSReact.CanvasJSChart options = {this.getChartOptions()}
             onRef={ref => this.chart = ref}
           />
         </div>
+
+        <div className='footer'>
+					<a target="https://www.paypal.com/paypalme/scrubsandwich" href="https://www.paypal.com/paypalme/scrubsandwich">
+								<img src={PayPalBadge} alt="PayPal Logo" width="90" height="50" />
+					</a>
+          &copy; 2020 Jacob Miecznikowski
+				</div>
       </div>
     )
   }

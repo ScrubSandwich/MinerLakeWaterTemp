@@ -49,12 +49,6 @@ class about extends Component {
 					</div>
 					</div>
 				</div>
-				<p className='invisible'>
-					Filler text that does not do anything, and is colored white to move the footer lower on the page. You should not be reading this.
-				</p>
-				<p className='invisible'>
-					Again, Filler text that does not do anything, and is colored white to move the footer lower on the page. You should not be reading this.
-				</p>
 				<div className='footer'>
 					<a target="https://www.paypal.com/paypalme/scrubsandwich" href="https://www.paypal.com/paypalme/scrubsandwich">
 								<img src={PayPalBadge} alt="PayPal Logo" width="90" height="50" />
