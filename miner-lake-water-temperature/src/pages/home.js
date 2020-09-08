@@ -1,21 +1,76 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import TimeAgo from 'react-timeago'
+import CanvasJSReact from '../lib/canvasjs.react';
 
 class home extends Component {
   state = {
-    temps: null	
+    temps: null,
+    chartDataPoints: []
+  }
+
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   componentDidMount() {
-    axios
-      .get('/getTemps')
-      .then((res) => {
-	    this.setState({
-		  temps: res.data
-		});
-	  })
-	  .catch(err => console.log(err));
+    if (true) {
+      axios
+        .get('/getTemps')
+        .then((res) => {
+          this.setState({
+            temps: res.data
+          });
+
+          this.setChartDataPoints(res.data);
+        })
+        .catch(err => console.log(err));
+      }
+  }
+
+  setChartDataPoints(data) {
+    var points = [];
+
+    data.forEach(data => {
+      var timestamp = data.time;
+      var tempF = parseInt(data.tempF);
+
+      var split = timestamp.split("-");
+      var year = split[0];
+      var month = split[1];
+      var day = split[2].substring(0, 2);
+
+      var date = new Date(year, month, day);
+
+      var point = {x: date, y: tempF };
+
+      points.push(point);
+    });
+
+    this.setState({
+      chartDataPoints: points
+    })
+
+  }
+
+  getChartOptions() {
+    return {
+			animationEnabled: true,
+			title:{
+				text: "Water Temperature Over Time"
+			},
+			axisX: {
+				valueFormatString: "MMM D"
+			},
+			axisY: {
+				title: "Temperature (\u00b0F)",
+				prefix: ""
+			},
+			data: [{
+				type: "spline",
+				dataPoints: this.state.chartDataPoints
+			}]
+		}
   }
 
   render() {
@@ -30,11 +85,16 @@ class home extends Component {
     return (
       <div>
         <div className='main border'>
-        <h1>Current Water Temp: </h1>
-        {latestTemp}
-			  <h2>Last temperature reading: </h2>
-			  <TimeAgo date={latestTime} />
-			</div>
+          <h1>Current Water Temp: </h1>
+          {latestTemp}
+          <h2>Last temperature reading: </h2>
+          <TimeAgo date={latestTime} />
+			  </div>
+        <div>
+          <CanvasJSReact.CanvasJSChart options = {this.getChartOptions()}
+            onRef={ref => this.chart = ref}
+          />
+        </div>
       </div>
     )
   }
