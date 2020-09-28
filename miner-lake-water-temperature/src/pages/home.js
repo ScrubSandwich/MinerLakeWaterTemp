@@ -11,10 +11,6 @@ class home extends Component {
     chartDataPoints: []
   }
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidUpdate() {
     console.log(this.state);
   }
@@ -96,6 +92,9 @@ class home extends Component {
           <h2>Last temperature reading: </h2>
           <TimeAgo date={latestTime} />
 			  </div>
+
+        Note: The data points on the following chart are with TEST data.
+        This data will be replaced by real data over the next few months.
 
         <div className='main border'>
           <CanvasJSReact.CanvasJSChart options = {this.getChartOptions()}

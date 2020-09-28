@@ -13,6 +13,7 @@ app.get('/getTemps', (req, res) => {
   admin
     .firestore()
     .collection('waterTemps')
+    .limit(1)
     .orderBy('time', 'desc')
     .get()
     .then((data) => {
