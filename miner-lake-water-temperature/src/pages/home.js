@@ -59,7 +59,8 @@ class home extends Component {
     return {
 			animationEnabled: true,
 			title:{
-				text: "Water Temperature Over Time"
+        text: "Water Temperature Over Time",
+        fontFamily: "tahoma"
 			},
 			axisX: {
 				valueFormatString: "MMM D"
