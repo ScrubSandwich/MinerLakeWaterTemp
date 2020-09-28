@@ -39,7 +39,7 @@ class home extends Component {
 
       var split = timestamp.split("-");
       var year = split[0];
-      var month = split[1];
+      var month = split[1] - 1;
       var day = split[2].substring(0, 2);
 
       var date = new Date(year, month, day);
