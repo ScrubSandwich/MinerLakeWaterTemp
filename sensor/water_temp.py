@@ -14,7 +14,7 @@ device_file = device_folder + '/w1_slave'
 
 MINUTE = 60
 # Delay in seconds between readins to be sent to server
-rate = 15 * MINUTE
+rate = 59 * MINUTE
 
 # Time to wait in seconds on first run to make sure wifi is connected
 initial_time = 1 * MINUTE
@@ -28,12 +28,7 @@ updateFrequency = 55
 
 status_code = -1
 
-def write_file(message):
-    #f = open(log, "a")  # append mode 
-    #f.write(message)
-    #f.write("\n") 
-    #f.close()
-    
+def write_file(message):    
     print(message)
 
 def read_data():
